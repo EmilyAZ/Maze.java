@@ -63,4 +63,10 @@ public class Maze {
     public Point getMyExit(){
         return myExit;
     }
+    public int getMyMazeRows(){
+        return myMazeRows;
+    }
+    public int getMyMazeColumns(){
+        return myMazeColumns;
+    }
 }
