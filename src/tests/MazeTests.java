@@ -10,14 +10,14 @@ public class MazeTests {
     @Test
     public void testConstructorMazeEntrance(){
         myMaze = new Maze(4,4);
-        assertEquals(0, myMaze.getMyCurrentRoom().x);
-        assertEquals(0,myMaze.getMyCurrentRoom().y);
+        assertEquals(0, myMaze.getCurrentRoom().x);
+        assertEquals(0,myMaze.getCurrentRoom().y);
     }
     @Test
     public void testConstructorMazeExit(){
         myMaze = new Maze(4,5);
-        assertEquals(3, myMaze.getMyExit().x);
-        assertEquals(4, myMaze.getMyExit().y);
+        assertEquals(3, myMaze.getExit().x);
+        assertEquals(4, myMaze.getExit().y);
     }
     @Test
     public void testConstructorInvalidRoom(){
@@ -27,8 +27,8 @@ public class MazeTests {
     public void testSetCurrentRoom(){
         myMaze = new Maze(5,5);
         myMaze.setCurrentRoom(1,2);
-        assertEquals(1,myMaze.getMyCurrentRoom().x);
-        assertEquals(2,myMaze.getMyCurrentRoom().y);
+        assertEquals(1,myMaze.getCurrentRoom().x);
+        assertEquals(2,myMaze.getCurrentRoom().y);
     }
     @Test
     public void testSetCurrentRoomInvalidInput(){

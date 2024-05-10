@@ -9,7 +9,7 @@ public class Maze {
     private static final int FOUR_DOOR_ROOM = 4;
     private final Room[][] myMaze;
     private final Point myExit;
-    private Point myCurrentRoom;
+    private final Point myCurrentRoom;
     private final int myMazeRows;
     private final int myMazeColumns;
 
@@ -54,19 +54,18 @@ public class Maze {
         if(theXCord >= myMazeColumns || theXCord < 0 || theYCord >= myMazeRows || theYCord < 0){
             throw new IllegalArgumentException("invalid coordinates out of bound for maze");
         }
-        myCurrentRoom.x = theXCord;
-        myCurrentRoom.y = theYCord;
+        myCurrentRoom.setLocation(theXCord,theYCord);
     }
-    public Point getMyCurrentRoom(){
+    public Point getCurrentRoom(){
         return myCurrentRoom;
     }
-    public Point getMyExit(){
+    public Point getExit(){
         return myExit;
     }
-    public int getMyMazeRows(){
+    public int getMazeRows(){
         return myMazeRows;
     }
-    public int getMyMazeColumns(){
+    public int getMazeColumns(){
         return myMazeColumns;
     }
 }
