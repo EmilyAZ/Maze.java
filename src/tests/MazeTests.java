@@ -20,6 +20,11 @@ public class MazeTests {
         assertEquals(4, myMaze.getExit().y);
     }
     @Test
+    public void testCreateMaze(){
+        myMaze = new Maze(4,4);
+
+    }
+    @Test
     public void testConstructorInvalidRoom(){
         assertThrows(IllegalArgumentException.class, () ->myMaze = new Maze(2,3));
     }

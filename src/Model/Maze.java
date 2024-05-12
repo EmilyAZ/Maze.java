@@ -25,22 +25,14 @@ public class Maze {
         myCurrentRoom = mazeEntrance();
         myExit = mazeExit();
     }
-
     private void createMaze(){
-        for(int i = 0; i < myMazeRows; i++){
-            for(int j = 0; j < myMazeColumns; j++){
-                if(((i == 0) && (j == 0 || j+1 ==myMazeColumns))
-                        || ((i+1 == myMazeRows)&& (j == 0 || j+1 ==myMazeColumns))){ // if top/bottom row and left and right edges
-                    myMaze[i][j] = new Room(TWO_DOOR_ROOM);
-                }
-                else if((i > 0 && i+1 < myMazeRows) && (j == 0 || j+1 == myMazeColumns)
-                        ||((i == 0 || i + 1 == myMazeRows) && (j > 0 && j +1 < myMazeColumns))){ //if edge room not a corner
-                    myMaze[i][j] = new Room(THREE_DOOR_ROOM);
-                }
-                else{
-                    myMaze[i][j] = new Room(FOUR_DOOR_ROOM);// any room surrounded by other rooms
-                }
-
+        for(int i = 0; i < myMazeRows;i++){
+            for(int j = 0; j < myMazeColumns;j++){
+                boolean topDoor = (i!=0);
+                boolean bottomDoor = (i+1 != myMazeRows);
+                boolean leftDoor = (j != 0);
+                boolean rightDoor = (j + 1 != myMazeColumns);
+                myMaze[i][j] = new Room(leftDoor, rightDoor,topDoor,bottomDoor);
             }
         }
     }
