@@ -1,6 +1,6 @@
 package Model;
 
-public class ShortAnswerQuestion extends Questions{
+public final class ShortAnswerQuestion extends Questions{
     private final String myCorrectAnswer;
 
     public ShortAnswerQuestion(String theQuestionText, String theCorrectAnswer){

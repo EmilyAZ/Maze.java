@@ -3,7 +3,7 @@ package Model;
 
 import java.awt.*;
 
-public class Player {
+public final class Player {
     private static final String DEFAULTNAME = "Player One";
     private final Maze myMaze;
     private String myName;

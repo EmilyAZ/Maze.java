@@ -1,6 +1,6 @@
 package Model;
 import java.util.List;
-public class MultipleChoiceQuestion extends Questions{
+public final class MultipleChoiceQuestion extends Questions{
     private final List<String> myChoices;
     private final int myCorrectAnswerIndex;
 

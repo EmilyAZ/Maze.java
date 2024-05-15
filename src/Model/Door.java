@@ -1,5 +1,5 @@
 package Model;
-public class Door {
+public final class Door {
     private boolean doorLocked;
 
     public Door(final boolean theDoorLocked) {

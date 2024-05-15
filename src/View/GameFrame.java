@@ -19,6 +19,7 @@ public class GameFrame extends JFrame implements PropertyChangeListener {
     }
 
     private void setupGUI(){
+        add(new MainMenuPanel());
         setSize(HORIZONTAL_MARGIN, VERTICAL_MARGIN);
         setLocation(SCREEN_SIZE.width / 2 - getWidth() / 2,
                 SCREEN_SIZE.height / 2 - getHeight() / 2);

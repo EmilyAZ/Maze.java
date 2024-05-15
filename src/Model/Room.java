@@ -3,7 +3,7 @@ package Model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Room {
+public final class Room {
     private static final String RIGHT = "right";
     private static final String LEFT = "left";
     private static final String TOP = "top";

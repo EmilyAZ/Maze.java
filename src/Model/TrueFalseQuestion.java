@@ -1,6 +1,6 @@
 package Model;
 
-public class TrueFalseQuestion extends Questions {
+public final class TrueFalseQuestion extends Questions {
     private final boolean myCorrectAnswer;
 
     public TrueFalseQuestion(String theQuestionText, boolean theCorrectAnswer){

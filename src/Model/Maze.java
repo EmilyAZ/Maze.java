@@ -2,7 +2,7 @@ package Model;
 
 import java.awt.*;
 
-public class Maze {
+public final class Maze {
     private static final int MIN_ROOMS = 4;
     private final Room[][] myMaze;
     private final Point myExit;
