@@ -1,4 +1,4 @@
-package tests;
+package Tests;
 
 import Model.Door;
 import org.junit.jupiter.api.Test;

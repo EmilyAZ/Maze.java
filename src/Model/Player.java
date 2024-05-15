@@ -4,13 +4,17 @@ package Model;
 import java.awt.*;
 
 public class Player {
+    private static final String DEFAULTNAME = "Player One";
     private final Maze myMaze;
-    private final String myName;
+    private String myName;
     private int myScore;
-    public Player (final String theName, Maze theMaze){
-        myName = theName;
+    public Player (Maze theMaze){
+        myName = DEFAULTNAME;
         myScore = 0;
         myMaze = theMaze;
+    }
+    public void setName(final String theName){
+        myName = theName;
     }
     public void moveLeft(){
         int newX = myMaze.getCurrentRoom().x - 1;

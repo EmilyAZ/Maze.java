@@ -4,9 +4,6 @@ import java.awt.*;
 
 public class Maze {
     private static final int MIN_ROOMS = 4;
-    private static final int TWO_DOOR_ROOM = 2;
-    private static final int THREE_DOOR_ROOM = 3;
-    private static final int FOUR_DOOR_ROOM = 4;
     private final Room[][] myMaze;
     private final Point myExit;
     private final Point myCurrentRoom;

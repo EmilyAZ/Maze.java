@@ -1,4 +1,4 @@
-package tests;
+package Tests;
 
 import Model.Maze;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package tests;
+package Tests;
 
 import Model.Maze;
 import Model.Player;
@@ -16,11 +16,11 @@ public class PlayerTest {
     @BeforeEach
     public void beforeEach(){
         myMaze = new Maze(5,6);
-        myPlayer = new Player("test", myMaze);
+        myPlayer = new Player(myMaze);
     }
     @Test
     public void testPlayerConstructor(){
-        assertEquals("test", myPlayer.getName());
+        assertEquals("DEFAULTNAME",myPlayer.getName());
         assertEquals(0, myPlayer.getScore());
     }
     @Test
