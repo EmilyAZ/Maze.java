@@ -30,6 +30,7 @@ public final class Room {
         }
         myNumOfDoors = myDoors.size();
 
+
     }
     public Door getLeftDoor(){
         return myDoors.get(LEFT);

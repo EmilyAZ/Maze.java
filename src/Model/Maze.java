@@ -23,13 +23,13 @@ public final class Maze {
         myExit = mazeExit();
     }
     private void createMaze(){
-        for(int i = 0; i < myMazeRows;i++){
-            for(int j = 0; j < myMazeColumns;j++){
-                boolean topDoor = (i!=0);
-                boolean bottomDoor = (i+1 != myMazeRows);
-                boolean leftDoor = (j != 0);
-                boolean rightDoor = (j + 1 != myMazeColumns);
-                myMaze[i][j] = new Room(leftDoor, rightDoor,topDoor,bottomDoor);
+        for(int rows = 0; rows < myMazeRows;rows++){
+            for(int columns = 0; columns < myMazeColumns;columns++){
+                boolean topDoor = (rows!=0);
+                boolean bottomDoor = (rows+1 != myMazeRows);
+                boolean leftDoor = (columns != 0);
+                boolean rightDoor = (columns + 1 != myMazeColumns);
+                myMaze[rows][columns] = new Room(leftDoor, rightDoor,topDoor,bottomDoor);
             }
         }
     }

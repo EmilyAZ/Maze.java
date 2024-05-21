@@ -21,6 +21,7 @@ public final class MainMenuPanel extends JPanel {
     private void layoutComponents(){
         add(namePanel());
         add(myStartButton);
+
     }
     private JPanel namePanel(){
         final JPanel namePanel = new JPanel();

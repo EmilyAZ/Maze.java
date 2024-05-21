@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MazeTests {
     private Maze myMaze;
+
     @Test
     public void testConstructorMazeEntrance(){
         myMaze = new Maze(4,4);

@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DoorTests {
     private Door myDoor;
+
     @Test
     public void testConstructor(){
         myDoor = new Door(true);
