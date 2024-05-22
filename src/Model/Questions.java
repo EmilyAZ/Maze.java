@@ -1,5 +1,3 @@
-//questions super class
-
 package Model;
 
 public abstract class Questions {
@@ -15,3 +13,5 @@ public abstract class Questions {
 
     public abstract boolean checkAnswer(String theAnswer);
 }
+
+
