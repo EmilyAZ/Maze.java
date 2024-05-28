@@ -54,6 +54,14 @@ public final class Room {
     public int getMyNumOfDoors() {
         return myNumOfDoors;
     }
+    public String getDoorPosition(Door theDoor) {
+        for (Map.Entry<String, Door> entry : myDoors.entrySet()) {
+            if (entry.getValue() == theDoor) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
     public Map<String, Door> getMyDoors() {
         return myDoors;
     }

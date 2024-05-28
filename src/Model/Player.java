@@ -28,9 +28,5 @@ public final class Player {
     public int getScore(){
         return myScore;
     }
-    public Point getCurrentRoom(){
-        return myMaze.getCurrentRoom();
-    }
-
 
 }

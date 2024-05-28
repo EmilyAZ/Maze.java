@@ -5,28 +5,40 @@ import Model.Maze;
 import Model.Room;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import javax.swing.*;
 
 public class MazePanel extends JPanel implements PropertyChangeListener {
     private final Maze myMaze;
-    private final Map<Door,JLabel> doorLabels;
+    private final Map<Door,JButton> myDoorButtons;
+    private final Map<Room,JPanel> myRoomPanels;
+    private final JLabel currentRoomLabel;
 
     public MazePanel(Maze maze) {
         super();
         myMaze = maze;
-        doorLabels = new HashMap<>();
+        myDoorButtons = new HashMap<>();
+        myRoomPanels = new HashMap<>();
+        currentRoomLabel = new JLabel("Current Room");
         layoutComponents();
     }
     private void layoutComponents() {
         setLayout(new GridLayout(myMaze.getMyMazeRows(), myMaze.getMyMazeColumns()));
+        createRoomPanels();
+    }
+    private void createRoomPanels(){
         for (int row = 0; row < myMaze.getMyMazeRows(); row++) {
             for (int col = 0; col < myMaze.getMyMazeColumns(); col++) {
+                JPanel roomPanel = new JPanel();
                 Room room = myMaze.getRoomInMaze(row, col);
-                add(drawRoom(room, row,  col));
+                roomPanel = drawRoom(room,row,col);
+                add(roomPanel);
+                myRoomPanels.put(room,roomPanel);
             }
         }
     }
@@ -35,49 +47,76 @@ public class MazePanel extends JPanel implements PropertyChangeListener {
         JPanel roomPanel = new JPanel();
         roomPanel.setBackground(Color.GRAY);
         roomPanel.setLayout(new BorderLayout());
-        JLabel label = new JLabel(String.valueOf(row)+ String.valueOf(col));
-        JLabel topDoor = drawDoor(room.getTopDoor());
-        JLabel leftDoor = drawDoor(room.getLeftDoor());
-        JLabel rightDoor = drawDoor(room.getRightDoor());
-        JLabel bottomDoor = drawDoor(room.getBottomDoor());
+        JButton topDoor = drawDoor(room.getTopDoor(), "TOP");
+        JButton leftDoor = drawDoor(room.getLeftDoor(), "LEFT");
+        JButton rightDoor = drawDoor(room.getRightDoor(),"RIGHT");
+        JButton bottomDoor = drawDoor(room.getBottomDoor(), "BOTTOM");
         roomPanel.add(topDoor, BorderLayout.NORTH);
         roomPanel.add(leftDoor, BorderLayout.WEST);
         roomPanel.add(rightDoor, BorderLayout.EAST);
         roomPanel.add(bottomDoor, BorderLayout.SOUTH);
-        roomPanel.add(label,BorderLayout.CENTER);
+        if(room == myMaze.getCurrentRoom()){
+            roomPanel.add(currentRoomLabel, BorderLayout.CENTER);
+        }
         return roomPanel;
     }
 
-    private JLabel drawDoor(Door door){
-        if(doorLabels.get(door) != null){
-            return doorLabels.get(door);
+    private JButton drawDoor(Door door, String position){
+        if(myDoorButtons.get(door) != null){
+            return myDoorButtons.get(door);
         }
-        JLabel doorLabel = new JLabel();
-        doorLabel.setPreferredSize(new Dimension(5,5));
-        doorLabel.setOpaque(true);
+        JButton doorButton = new JButton();
+        doorButton.setPreferredSize(new Dimension(5,5));
+        doorButton.setOpaque(true);
+
         if(door == null){
-            doorLabel.setBackground(Color.BLACK);
+            doorButton.setBackground(Color.BLACK);
+            doorButton.setEnabled(false);
         }
         else if(door.getDoorLocked()){
-            doorLabel.setBackground(Color.red);
-            doorLabels.put(door,doorLabel);
+            doorButton.setBackground(Color.red);
+            myDoorButtons.put(door,doorButton);
         } else {
-            doorLabel.setBackground(Color.GREEN);
-            doorLabels.put(door,doorLabel);
+            doorButton.setBackground(Color.GREEN);
+            myDoorButtons.put(door,doorButton);
         }
-        return doorLabel;
+        if(Objects.equals(position, "LEFT")){
+            doorButton.addActionListener(this::LeftDoorAction);
+        } else if (Objects.equals(position,"RIGHT")) {
+            doorButton.addActionListener(this::RightDoorAction);
+        } else if (Objects.equals(position,"BOTTOM")) {
+            doorButton.addActionListener(this::BottomDoorAction);
+        } else if (Objects.equals(position,"TOP")) {
+            doorButton.addActionListener(this::TopDoorAction);
+        }
+        return doorButton;
     }
+    private void LeftDoorAction(final ActionEvent theEvent){
+        myMaze.moveLeft();
+
+    }
+    private void RightDoorAction(final ActionEvent theEvent){
+        myMaze.moveRight();
+
+    }
+    private void BottomDoorAction(final ActionEvent theEvent){
+        myMaze.moveDown();
+    }
+    private void TopDoorAction(final ActionEvent theEvent){
+        myMaze.moveUp();
+
+    }
+
     private void updateDoorLabel(Room room){
         for(Door doors: room.getMyDoors().values()){
-            JLabel doorLabel = new JLabel();
-            doorLabel.setPreferredSize(new Dimension(5,5));
-            doorLabel.setOpaque(true);
+            JButton doorButton = myDoorButtons.get(doors);
+
             if (doors.getDoorLocked()) {
-                doorLabel.setBackground(Color.red);
-                doorLabels.put(doors,doorLabel);
+                doorButton.setBackground(Color.red);
+                myDoorButtons.put(doors,doorButton);
             } else {
-                doorLabel.setBackground(Color.GREEN);
-                doorLabels.put(doors,doorLabel);
+                doorButton.setBackground(Color.GREEN);
+                myDoorButtons.put(doors,doorButton);
             }
 
         }
@@ -85,7 +124,7 @@ public class MazePanel extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent theEvent) {
         if("Room Change".equals(theEvent.getPropertyName())){
-            updateDoorLabel(myMaze.getCurrentRoomInstance());
+            updateDoorLabel(myMaze.getCurrentRoom());
         }
     }
 }
