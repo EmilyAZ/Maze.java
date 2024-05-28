@@ -5,10 +5,10 @@ public final class Door {
     public Door(final boolean theDoorLocked) {
         doorLocked = theDoorLocked;
     }
-    public boolean getDoorStatus(){
+    public boolean getDoorLocked(){
         return doorLocked;
     }
-    public void setDoorStatus(final boolean theDoorLocked){
+    public void setDoorLocked(final boolean theDoorLocked){
         doorLocked = theDoorLocked;
     }
 }

@@ -2,6 +2,7 @@ package Model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public final class Room {
     private static final String RIGHT = "right";
@@ -12,24 +13,24 @@ public final class Room {
     private boolean myRoomProcessed;
     private final Map<String, Door> myDoors;
     private final int myNumOfDoors;
-    public Room(final boolean theLeftNeighbor,
-                final boolean theRightNeighbor, final boolean theTopNeighbor, final boolean theBottomNeighbor){
+    public Room(final Door theLeftDoor,
+                final Door theRightDoor, final Door theTopDoor, final Door theBottomDoor){
         myRoomProcessed = false;
         myDoors = new HashMap<>();
-        if(theLeftNeighbor) {
-            myDoors.put(LEFT, new Door(false));
+
+        if(theLeftDoor != null){
+            myDoors.put(LEFT, theLeftDoor);
         }
-        if(theRightNeighbor){
-            myDoors.put(RIGHT, new Door(false));
+        if(theRightDoor != null){
+            myDoors.put(RIGHT, theRightDoor);
         }
-        if(theTopNeighbor){
-            myDoors.put(TOP, new Door(false));
+        if(theTopDoor != null){
+            myDoors.put(TOP, theTopDoor);
         }
-        if(theBottomNeighbor){
-            myDoors.put(BOTTOM, new Door(false));
+        if(theBottomDoor != null){
+            myDoors.put(BOTTOM , theBottomDoor);
         }
         myNumOfDoors = myDoors.size();
-
 
     }
     public Door getLeftDoor(){
@@ -52,5 +53,8 @@ public final class Room {
     }
     public int getMyNumOfDoors() {
         return myNumOfDoors;
+    }
+    public Map<String, Door> getMyDoors() {
+        return myDoors;
     }
 }

@@ -11,18 +11,18 @@ public class DoorTests {
     @Test
     public void testConstructor(){
         myDoor = new Door(true);
-        assertTrue(myDoor.getDoorStatus());
+        assertTrue(myDoor.getDoorLocked());
     }
     @Test
     public void testGetDoor(){
         myDoor = new Door(true);
-        assertTrue(myDoor.getDoorStatus());
+        assertTrue(myDoor.getDoorLocked());
     }
     @Test
     public void testSetMyDoor(){
         myDoor = new Door(true);
-        myDoor.setDoorStatus(false);
-        assertFalse(myDoor.getDoorStatus());
+        myDoor.setDoorLocked(false);
+        assertFalse(myDoor.getDoorLocked());
     }
 
 
