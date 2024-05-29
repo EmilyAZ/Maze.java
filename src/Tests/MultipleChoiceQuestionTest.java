@@ -1,11 +1,11 @@
 package Tests;
 
 import Model.MultipleChoiceQuestion;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 public class MultipleChoiceQuestionTest {
 
@@ -39,3 +39,4 @@ public class MultipleChoiceQuestionTest {
         assertFalse(question.checkAnswer("Invalid"));
     }
 }
+
