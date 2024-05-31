@@ -1,8 +1,6 @@
 package Model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public final class Room {
     private static final String RIGHT = "right";
@@ -10,12 +8,9 @@ public final class Room {
     private static final String TOP = "top";
     private static final String BOTTOM = "bottom";
 
-    private boolean myRoomProcessed;
     private final Map<String, Door> myDoors;
-    private final int myNumOfDoors;
     public Room(final Door theLeftDoor,
                 final Door theRightDoor, final Door theTopDoor, final Door theBottomDoor){
-        myRoomProcessed = false;
         myDoors = new HashMap<>();
 
         if(theLeftDoor != null){
@@ -30,7 +25,6 @@ public final class Room {
         if(theBottomDoor != null){
             myDoors.put(BOTTOM , theBottomDoor);
         }
-        myNumOfDoors = myDoors.size();
 
     }
     public Door getLeftDoor(){
@@ -45,24 +39,5 @@ public final class Room {
     public Door getBottomDoor(){
         return myDoors.get(BOTTOM);
     }
-    public boolean getRoomStatus(){
-        return myRoomProcessed;
-    }
-    public void setMyRoomProcessed(boolean myStatus){
-        myRoomProcessed = myStatus;
-    }
-    public int getMyNumOfDoors() {
-        return myNumOfDoors;
-    }
-    public String getDoorPosition(Door theDoor) {
-        for (Map.Entry<String, Door> entry : myDoors.entrySet()) {
-            if (entry.getValue() == theDoor) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
-    public Map<String, Door> getMyDoors() {
-        return myDoors;
-    }
+
 }

@@ -1,6 +1,5 @@
 package View;
 
-import Model.Maze;
 
 import java.awt.*;
 
@@ -13,7 +12,7 @@ public final class GameMain {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new MazeFrame(new Maze(4,4));
+                new GameFrame();
             }
         });
     }

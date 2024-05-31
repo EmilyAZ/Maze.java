@@ -3,7 +3,7 @@ package Model;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.Objects;
+
 
 public final class Maze {
     private static final int MIN_ROOMS = 4;
@@ -39,54 +39,74 @@ public final class Maze {
                 Door bottomDoor = null;
                 Door leftDoor = null;
                 Door rightDoor = null;
-                if (topNeighbor) {
-                    Door door = myMaze[row - 1][column].getBottomDoor();
-                    topDoor = Objects.requireNonNullElseGet(door, () -> new Door(true));
-                }
-                if (bottomNeighbor) {
-                     bottomDoor = new Door(true);
-                }
-                if (leftNeighbor) {
-                    Door door = myMaze[row][column - 1].getRightDoor();
-                    leftDoor = Objects.requireNonNullElseGet(door, () -> new Door(true));
-                }
-                if (rightNeighbor){
-                    rightDoor = new Door(true);
+                int doorCount = 0;
+                while (doorCount == 0) {
+                    if (topNeighbor && (randomBoolean() || myMaze[row - 1][column].getBottomDoor() != null)) {
+                        topDoor = myMaze[row - 1][column].getBottomDoor();
+                        if (topDoor != null) {
+                            doorCount++;
+                        }
+                    }
+                    if (bottomNeighbor && randomBoolean()) {
+                        bottomDoor = new Door(true);
+                        doorCount++;
+                    }
+                    if (leftNeighbor && (randomBoolean() || myMaze[row][column - 1].getRightDoor() != null)) {
+                        leftDoor = myMaze[row][column - 1].getRightDoor();
+                        if(leftDoor != null){
+                            doorCount++;
+                        }
+                    }
+                    if (rightNeighbor && randomBoolean()) {
+                        rightDoor = new Door(true);
+                        doorCount ++;
+                    }
                 }
                 myMaze[row][column] = new Room(leftDoor, rightDoor,topDoor,bottomDoor);
             }
         }
     }
-    private Room mazeEntrance(){ //temporary entrance
-        myCurrentRoomLocation = new Point(0,0);
-        return myMaze[0][0];
+    private static boolean randomBoolean(){
+        return Math.random() < 0.7;
     }
-    private Room mazeExit(){ //temporary exit
-        return myMaze[myMazeRows-1][myMazeColumns-1];
+
+    private Room mazeEntrance(){
+        int entranceCol = (int)(Math.random() * myMazeColumns);
+        myCurrentRoomLocation = new Point(0,entranceCol);
+        return myMaze[0][entranceCol];
+    }
+    private Room mazeExit(){
+        int entranceCol = (int)(Math.random() * myMazeColumns);
+        return myMaze[myMazeRows-1][entranceCol];
     }
     public void setCurrentRoom(final int theNewRow, final int theNewCol){
         if(theNewRow >= myMazeRows || theNewRow < 0 || theNewCol >= myMazeColumns || theNewCol < 0){
             throw new IllegalArgumentException("invalid coordinates out of bound for maze");
         }
+        Room PreviousRoom = myCurrentRoom;
         myCurrentRoom = myMaze[theNewRow][theNewCol];
         myCurrentRoomLocation.setLocation(theNewRow,theNewCol);
-        fireCurrentRoomChange();
+        fireCurrentRoomChange(PreviousRoom);
     }
     public void moveLeft(){
         int newCol = myCurrentRoomLocation.y - 1;
         if(newCol < 0){
             throw new IllegalArgumentException("trying to move out of bounds");
         }
+        Room PreviousRoom = myCurrentRoom;
+        fireCurrentDoorChange(myCurrentRoom.getLeftDoor());
         setCurrentRoom(myCurrentRoomLocation.x, newCol);
-        System.out.println("current Row: "+ myCurrentRoomLocation.x +"current col: "+ myCurrentRoomLocation.y);
+        fireCurrentRoomChange(PreviousRoom);
     }
     public void moveRight(){
         int newCol = myCurrentRoomLocation.y + 1;
         if(newCol >= myMazeColumns){
             throw new IllegalArgumentException("trying to move out of bounds");
         }
+        Room PreviousRoom = myCurrentRoom;
+        fireCurrentDoorChange(myCurrentRoom.getRightDoor());
         setCurrentRoom(myCurrentRoomLocation.x,newCol);
-        System.out.println("current Row: "+ myCurrentRoomLocation.x +"current col: "+ myCurrentRoomLocation.y);
+        fireCurrentRoomChange(PreviousRoom);
 
     }
     public void moveUp(){
@@ -94,8 +114,11 @@ public final class Maze {
         if(newRow < 0){
             throw new IllegalArgumentException("trying to move out of bounds");
         }
+        Room PreviousRoom = myCurrentRoom;
+        fireCurrentDoorChange(myCurrentRoom.getTopDoor());
         setCurrentRoom(newRow, myCurrentRoomLocation.y);
-        System.out.println("current Row: "+ myCurrentRoomLocation.x +"current col: "+ myCurrentRoomLocation.y);
+        fireCurrentRoomChange(PreviousRoom);
+
 
     }
     public void moveDown(){
@@ -103,8 +126,10 @@ public final class Maze {
         if(newRow >= myMazeRows){
             throw new IllegalArgumentException("trying to move out of bounds");
         }
+        Room PreviousRoom = myCurrentRoom;
+        fireCurrentDoorChange(myCurrentRoom.getBottomDoor());
         setCurrentRoom(newRow, myCurrentRoomLocation.y);
-        System.out.println("current Row: "+ myCurrentRoomLocation.x +"current col: "+ myCurrentRoomLocation.y);
+        fireCurrentRoomChange(PreviousRoom);
 
     }
     public Room getCurrentRoom(){
@@ -122,8 +147,11 @@ public final class Maze {
     public Room getRoomInMaze(int theRow, int theCol){
         return myMaze[theRow][theCol];
     }
-    private void fireCurrentRoomChange(){
-        myChange.firePropertyChange("Room Change", null, myCurrentRoomLocation);
+    private void fireCurrentDoorChange(Door theDoor){
+        myChange.firePropertyChange("Door Change", null, theDoor);
+    }
+    private void fireCurrentRoomChange(Room thePreviousRoom){
+        myChange.firePropertyChange("Room Change", thePreviousRoom, myCurrentRoom);
     }
     public void addPropertyChangeListener(final PropertyChangeListener theListener){
         myChange.addPropertyChangeListener(theListener);

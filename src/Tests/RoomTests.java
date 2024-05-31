@@ -22,19 +22,7 @@ public class RoomTests {
         assertNull(myRoom.getTopDoor());
         assertNull(myRoom.getBottomDoor());
     }
-    @Test
-    public void testGetRoomStatus(){
-        assertFalse(myRoom.getRoomStatus());
-    }
-    @Test
-    public void testSetMyRoomProcessed(){
-        myRoom.setMyRoomProcessed(true);
-        assertTrue(myRoom.getRoomStatus());
-    }
-    @Test
-    public void testGetNumOfDoors() {
-        assertEquals(2, myRoom.getMyNumOfDoors());
-    }
+
 
 }
 */
