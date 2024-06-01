@@ -7,10 +7,12 @@ public final class Room {
     private static final String LEFT = "left";
     private static final String TOP = "top";
     private static final String BOTTOM = "bottom";
+    private final Boolean myExit;
+    private Boolean myCurrentRoom;
 
     private final Map<String, Door> myDoors;
     public Room(final Door theLeftDoor,
-                final Door theRightDoor, final Door theTopDoor, final Door theBottomDoor){
+                final Door theRightDoor, final Door theTopDoor, final Door theBottomDoor, final boolean theExit,final boolean theCurrentRoom){
         myDoors = new HashMap<>();
 
         if(theLeftDoor != null){
@@ -25,6 +27,8 @@ public final class Room {
         if(theBottomDoor != null){
             myDoors.put(BOTTOM , theBottomDoor);
         }
+        myExit = theExit;
+        myCurrentRoom = theCurrentRoom;
 
     }
     public Boolean allDoorsLocked(){
@@ -34,6 +38,15 @@ public final class Room {
             }
         }
         return true;
+    }
+    public Boolean getMyExit(){
+        return myExit;
+    }
+    public Boolean getMyCurrentRoom(){
+        return myCurrentRoom;
+    }
+    public void setCurrentRoom(Boolean theCurrentRoom){
+        myCurrentRoom = theCurrentRoom;
     }
     public Door getLeftDoor(){
         return myDoors.get(LEFT);
