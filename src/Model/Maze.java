@@ -39,29 +39,18 @@ public final class Maze {
                 Door bottomDoor = null;
                 Door leftDoor = null;
                 Door rightDoor = null;
-                int doorCount = 0;
-                while (doorCount == 0) {
-                    if (topNeighbor && (randomBoolean() || myMaze[row - 1][column].getBottomDoor() != null)) {
-                        topDoor = myMaze[row - 1][column].getBottomDoor();
-                        if (topDoor != null) {
-                            doorCount++;
-                        }
-                    }
-                    if (leftNeighbor && (randomBoolean() || myMaze[row][column - 1].getRightDoor() != null)) {
-                        leftDoor = myMaze[row][column - 1].getRightDoor();
-                        if (leftDoor != null) {
-                            doorCount++;
-                        }
-                    }
-                    if (bottomNeighbor && (randomBoolean() || leftDoor == null)) {
-                        bottomDoor = new Door(true);
-                        doorCount++;
-                    }
+                if (topNeighbor && (randomBoolean() || myMaze[row - 1][column].getBottomDoor() != null)) {
+                    topDoor = myMaze[row - 1][column].getBottomDoor();
+                }
+                if (leftNeighbor && (randomBoolean() || myMaze[row][column - 1].getRightDoor() != null)) {
+                    leftDoor = myMaze[row][column - 1].getRightDoor();
+                }
+                if (bottomNeighbor && (randomBoolean() || leftDoor == null)) {
+                    bottomDoor = new Door(false);
+                }
 
-                    if (rightNeighbor && (randomBoolean() || bottomDoor == null)) {
-                        rightDoor = new Door(true);
-                        doorCount ++;
-                    }
+                if (rightNeighbor && (randomBoolean() || bottomDoor == null)) {
+                    rightDoor = new Door(false);
                 }
                 myMaze[row][column] = new Room(leftDoor, rightDoor,topDoor,bottomDoor);
             }

@@ -27,6 +27,14 @@ public final class Room {
         }
 
     }
+    public Boolean allDoorsLocked(){
+        for(Door door : myDoors.values()){
+            if(!door.getDoorLocked()){
+                return false;
+            }
+        }
+        return true;
+    }
     public Door getLeftDoor(){
         return myDoors.get(LEFT);
     }
