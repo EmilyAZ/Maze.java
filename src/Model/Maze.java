@@ -47,17 +47,18 @@ public final class Maze {
                             doorCount++;
                         }
                     }
-                    if (bottomNeighbor && randomBoolean()) {
-                        bottomDoor = new Door(true);
-                        doorCount++;
-                    }
                     if (leftNeighbor && (randomBoolean() || myMaze[row][column - 1].getRightDoor() != null)) {
                         leftDoor = myMaze[row][column - 1].getRightDoor();
-                        if(leftDoor != null){
+                        if (leftDoor != null) {
                             doorCount++;
                         }
                     }
-                    if (rightNeighbor && randomBoolean()) {
+                    if (bottomNeighbor && (randomBoolean() || leftDoor == null)) {
+                        bottomDoor = new Door(true);
+                        doorCount++;
+                    }
+
+                    if (rightNeighbor && (randomBoolean() || bottomDoor == null)) {
                         rightDoor = new Door(true);
                         doorCount ++;
                     }
@@ -67,7 +68,7 @@ public final class Maze {
         }
     }
     private static boolean randomBoolean(){
-        return Math.random() < 0.7;
+        return Math.random() < 0.5;
     }
 
     private Room mazeEntrance(){

@@ -15,7 +15,6 @@ import java.util.Objects;
 
 public class RoomPanel extends JPanel implements PropertyChangeListener {
     private final Room myRoom;
-
     private final Map<Door, JButton> myDoorButtons;
     private final Maze myMaze;
     public RoomPanel(Room theRoom, Maze theMaze){
