@@ -7,13 +7,16 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RoomPanel extends JPanel {
+public final class RoomPanel extends JPanel {
     private static final Dimension DOORBUTTONSIZE = new Dimension(10,10);
     private final Room myRoom;
     private final Map<Door, JButton> myDoorButtons;
 
     public RoomPanel(final Room theRoom) {
         super();
+        if(theRoom == null){
+            throw new IllegalArgumentException("room cannot be null");
+        }
         myRoom = theRoom;
         myDoorButtons = new HashMap<>();
         layoutComponents();
@@ -85,6 +88,9 @@ public class RoomPanel extends JPanel {
     }
 
     public void updateDoorState(final Door theDoor) {
+        if(theDoor == null){
+            throw new IllegalArgumentException("Door cannot be null");
+        }
         final JButton doorButton = myDoorButtons.get(theDoor);
         if (doorButton != null) {
             if (theDoor.getMyDoorLocked()) {
@@ -101,6 +107,12 @@ public class RoomPanel extends JPanel {
     }
 
     public JButton getDoorButton(final Door theDoor) {
+        if(theDoor == null){
+            throw new IllegalArgumentException("Door cannot be null");
+        }
+        if(myDoorButtons.get(theDoor) == null){
+            throw new IllegalArgumentException("Door not associated to rooms door buttons");
+        }
         return myDoorButtons.get(theDoor);
     }
 }

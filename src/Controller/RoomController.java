@@ -10,13 +10,19 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class RoomController implements PropertyChangeListener {
+public final class RoomController implements PropertyChangeListener {
     private static final String OUTBOUNDSMESSAGE = "Trying to move out of bounds";
     private static final String LOSEMESSAGE = "You Lose";
     private final Maze myMaze;
     private final RoomPanel myRoomPanel;
 
     public RoomController(final Maze theMaze, final RoomPanel theRoomPanel) {
+        if(theMaze == null){
+            throw new IllegalArgumentException("maze cannot be null");
+        }
+        if(theRoomPanel == null){
+            throw new IllegalArgumentException("room panel cannot be null");
+        }
         myMaze = theMaze;
         myRoomPanel = theRoomPanel;
         myMaze.addPropertyChangeListener(this);

@@ -7,7 +7,7 @@ import java.io.*;
 
 
 public final class Maze implements Serializable {
-    private static final String OUTBOUNDSMESSAGE = "Trying to move out of bounds";
+    private static final String OUTOFBOUNDSMESSAGE = "Trying to move out of bounds";
     private static final long serialversionUID = 2345214345L;
     private static final String FILENAME = "savedMaze.txt";
     private static final int MIN_ROOMS = 4;
@@ -86,7 +86,7 @@ public final class Maze implements Serializable {
     public void moveLeft() {
         final int newCol = myCurrentRoomLocation.y - 1;
         if (newCol < 0) {
-            throw new IllegalArgumentException(OUTBOUNDSMESSAGE);
+            throw new IllegalArgumentException(OUTOFBOUNDSMESSAGE);
         }
         fireCurrentDoorChange(myCurrentRoom.getLeftDoor());
         moveRoom(myCurrentRoomLocation.x, newCol);
@@ -94,7 +94,7 @@ public final class Maze implements Serializable {
     public void moveRight() {
         final int newCol = myCurrentRoomLocation.y + 1;
         if (newCol >= myMazeColumns) {
-            throw new IllegalArgumentException(OUTBOUNDSMESSAGE);
+            throw new IllegalArgumentException(OUTOFBOUNDSMESSAGE);
         }
         fireCurrentDoorChange(myCurrentRoom.getRightDoor());
         moveRoom(myCurrentRoomLocation.x, newCol);
@@ -104,7 +104,7 @@ public final class Maze implements Serializable {
     public void moveUp() {
         final int newRow = myCurrentRoomLocation.x - 1;
         if (newRow < 0) {
-            throw new IllegalArgumentException(OUTBOUNDSMESSAGE);
+            throw new IllegalArgumentException(OUTOFBOUNDSMESSAGE);
         }
         fireCurrentDoorChange(myCurrentRoom.getTopDoor());
         moveRoom(newRow, myCurrentRoomLocation.y);
@@ -114,7 +114,7 @@ public final class Maze implements Serializable {
     public void moveDown() {
         final int newRow = myCurrentRoomLocation.x + 1;
         if (newRow >= myMazeRows) {
-            throw new IllegalArgumentException(OUTBOUNDSMESSAGE);
+            throw new IllegalArgumentException(OUTOFBOUNDSMESSAGE);
         }
         fireCurrentDoorChange(myCurrentRoom.getBottomDoor());
         moveRoom(newRow, myCurrentRoomLocation.y);
@@ -129,6 +129,9 @@ public final class Maze implements Serializable {
         return myMazeColumns;
     }
     public Room getRoomInMaze(final int theRow, final int theCol) {
+        if (theRow >= myMazeRows || theRow < 0 || theCol >= myMazeColumns || theCol < 0) {
+            throw new IllegalArgumentException("invalid coordinates out of bound for maze");
+        }
         return myMaze[theRow][theCol];
     }
     private void fireCurrentDoorChange(final Door theDoor) {

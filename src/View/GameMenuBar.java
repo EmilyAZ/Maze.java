@@ -3,7 +3,7 @@ package View;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class GameMenuBar extends JMenuBar {
+public final class GameMenuBar extends JMenuBar {
     private final JMenuItem mySave;
     private final JMenuItem myLoad;
     public GameMenuBar() {

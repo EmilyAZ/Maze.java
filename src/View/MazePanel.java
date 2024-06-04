@@ -9,11 +9,14 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.*;
 
-public class MazePanel extends JPanel implements PropertyChangeListener {
+public final class MazePanel extends JPanel implements PropertyChangeListener {
     private final Maze myMaze;
 
     public MazePanel(final Maze theMaze) {
         super();
+        if(theMaze == null){
+            throw new IllegalArgumentException("Maze cannot be null");
+        }
         myMaze = theMaze;
         layoutComponents();
         myMaze.addPropertyChangeListener(this);

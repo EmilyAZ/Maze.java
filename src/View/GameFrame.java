@@ -5,7 +5,7 @@ import Model.Maze;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameFrame extends JFrame {
+public final class GameFrame extends JFrame {
     private static final Dimension DIMENSION = new Dimension(500, 500);
     private static final int ROOMS = 5;
     private final GameMenuBar myGameMenu;
