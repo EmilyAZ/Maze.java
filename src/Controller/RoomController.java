@@ -4,7 +4,6 @@ import Model.Door;
 import Model.Maze;
 import Model.Room;
 import View.RoomPanel;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,75 +11,77 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class RoomController implements PropertyChangeListener {
+    private static final String OUTBOUNDSMESSAGE = "Trying to move out of bounds";
+    private static final String LOSEMESSAGE = "You Lose";
     private final Maze myMaze;
     private final RoomPanel myRoomPanel;
 
-    public RoomController(Maze maze, RoomPanel roomPanel) {
-        myMaze = maze;
-        myRoomPanel = roomPanel;
+    public RoomController(final Maze theMaze, final RoomPanel theRoomPanel) {
+        myMaze = theMaze;
+        myRoomPanel = theRoomPanel;
         myMaze.addPropertyChangeListener(this);
         addDoorListeners();
 
     }
-    private void addDoorListeners(){
-        Room room = myRoomPanel.getRoom();
-        addDoorListener(room.getLeftDoor(), this::LeftDoorAction);
-        addDoorListener(room.getRightDoor(), this::RightDoorAction);
-        addDoorListener(room.getBottomDoor(), this::BottomDoorAction);
-        addDoorListener(room.getTopDoor(), this::TopDoorAction);
+    private void addDoorListeners() {
+        final Room room = myRoomPanel.getRoom();
+        addDoorListener(room.getLeftDoor(), this::leftDoorAction);
+        addDoorListener(room.getRightDoor(), this::rightDoorAction);
+        addDoorListener(room.getBottomDoor(), this::bottomDoorAction);
+        addDoorListener(room.getTopDoor(), this::topDoorAction);
     }
-    private void addDoorListener(Door door, ActionListener theAction) {
-        if (door != null) {
-            JButton doorButton = myRoomPanel.getDoorButton(door);
+    private void addDoorListener(final Door theDoor, final ActionListener theAction) {
+        if (theDoor != null) {
+            final JButton doorButton = myRoomPanel.getDoorButton(theDoor);
             if (doorButton != null) {
                 doorButton.addActionListener(theAction);
             }
         }
     }
 
-    private void LeftDoorAction(final ActionEvent theEvent) {
+    private void leftDoorAction(final ActionEvent theEvent) {
         try {
-            if(myMaze.getCurrentRoom().allDoorsLocked()){
-                JOptionPane.showConfirmDialog(myRoomPanel,"you lose!");
-            }else {
+            if (myMaze.getCurrentRoom().allDoorsLocked()) {
+                JOptionPane.showConfirmDialog(myRoomPanel, LOSEMESSAGE);
+            } else {
                 myMaze.moveLeft();
             }
-        } catch (IllegalArgumentException theException) {
-            JOptionPane.showMessageDialog(myRoomPanel, "Unable to move out of bounds");
+        } catch (final IllegalArgumentException theException) {
+            JOptionPane.showMessageDialog(myRoomPanel, OUTBOUNDSMESSAGE);
         }
     }
-    private void RightDoorAction(final ActionEvent theEvent){
-        try{
-            if(myMaze.getCurrentRoom().allDoorsLocked()){
-                JOptionPane.showConfirmDialog(myRoomPanel,"you lose!");
-            }else{
+    private void rightDoorAction(final ActionEvent theEvent) {
+        try {
+            if (myMaze.getCurrentRoom().allDoorsLocked()) {
+                JOptionPane.showConfirmDialog(myRoomPanel, LOSEMESSAGE);
+            } else {
                 myMaze.moveRight();
             }
-        } catch (IllegalArgumentException theException){
-            JOptionPane.showMessageDialog(myRoomPanel, "Unable to move out of bounds");
+        } catch (final IllegalArgumentException theException) {
+            JOptionPane.showMessageDialog(myRoomPanel, OUTBOUNDSMESSAGE);
         }
     }
-    private void BottomDoorAction(final ActionEvent theEvent){
-        try{
-            if(myMaze.getCurrentRoom().allDoorsLocked()){
-                JOptionPane.showConfirmDialog(myRoomPanel,"you lose!");
-            }else{
+    private void bottomDoorAction(final ActionEvent theEvent) {
+        try {
+            if (myMaze.getCurrentRoom().allDoorsLocked()) {
+                JOptionPane.showConfirmDialog(myRoomPanel, LOSEMESSAGE);
+            } else {
                 myMaze.moveDown();
             }
-        } catch (IllegalArgumentException theException){
-            JOptionPane.showMessageDialog(myRoomPanel, "Unable to move out of bounds");
+        } catch (final IllegalArgumentException theException) {
+            JOptionPane.showMessageDialog(myRoomPanel, OUTBOUNDSMESSAGE);
         }
 
     }
-    private void TopDoorAction(final ActionEvent theEvent){
-        try{
-            if(myMaze.getCurrentRoom().allDoorsLocked()){
-                JOptionPane.showConfirmDialog(myRoomPanel,"you lose!");
-            }else{
+    private void topDoorAction(final ActionEvent theEvent) {
+        try {
+            if (myMaze.getCurrentRoom().allDoorsLocked()) {
+                JOptionPane.showConfirmDialog(myRoomPanel, LOSEMESSAGE);
+            } else {
                 myMaze.moveUp();
             }
-        } catch (IllegalArgumentException theException){
-            JOptionPane.showMessageDialog(myRoomPanel, "Unable to move out of bounds");
+        } catch (final IllegalArgumentException theException) {
+            JOptionPane.showMessageDialog(myRoomPanel, OUTBOUNDSMESSAGE);
         }
     }
     public void updateView() {
@@ -88,12 +89,12 @@ public class RoomController implements PropertyChangeListener {
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent theEvent) {
+    public void propertyChange(final PropertyChangeEvent theEvent) {
         if ("Room Change".equals(theEvent.getPropertyName())) {
             updateView();
         }
         if ("Door Change".equals(theEvent.getPropertyName())) {
-            Door changedDoor = (Door) theEvent.getNewValue();
+            final Door changedDoor = (Door) theEvent.getNewValue();
             myRoomPanel.updateDoorState(changedDoor);
         }
     }

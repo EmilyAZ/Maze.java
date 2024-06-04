@@ -7,6 +7,7 @@ import java.io.*;
 
 
 public final class Maze implements Serializable {
+    private static final String OUTBOUNDSMESSAGE = "Trying to move out of bounds";
     private static final long serialversionUID = 2345214345L;
     private static final String FILENAME = "savedMaze.txt";
     private static final int MIN_ROOMS = 4;
@@ -28,15 +29,15 @@ public final class Maze implements Serializable {
         createMaze();
         myChange = new PropertyChangeSupport(this);
     }
-    private void createMaze(){
-        int exitCol = (int)(Math.random() * myMazeColumns);
-        int entranceCol = (int)(Math.random() * myMazeColumns);
-        for(int row = 0; row < myMazeRows;row++){
-            for(int column = 0; column < myMazeColumns;column++){
-                boolean topNeighbor = (row!=0);
-                boolean bottomNeighbor = (row+1 != myMazeRows);
-                boolean leftNeighbor = (column != 0);
-                boolean rightNeighbor = (column + 1 != myMazeColumns);
+    private void createMaze() {
+        final int exitCol = (int) (Math.random() * myMazeColumns);
+        final int entranceCol = (int) (Math.random() * myMazeColumns);
+        for (int row = 0; row < myMazeRows; row++) {
+            for (int column = 0; column < myMazeColumns; column++) {
+                final boolean topNeighbor = row != 0;
+                final boolean bottomNeighbor = row + 1 != myMazeRows;
+                final boolean leftNeighbor = column != 0;
+                final boolean rightNeighbor = column + 1 != myMazeColumns;
                 Door topDoor = null;
                 Door bottomDoor = null;
                 Door leftDoor = null;
@@ -54,118 +55,118 @@ public final class Maze implements Serializable {
                 if (rightNeighbor && (randomBoolean() || bottomDoor == null)) {
                     rightDoor = new Door(false);
                 }
-                if(column == exitCol && row == myMazeRows-1){
-                    myMaze[row][column] = new Room(leftDoor, rightDoor,topDoor,bottomDoor,true,false);
+                if (column == exitCol && row == myMazeRows - 1) {
+                    myMaze[row][column] = new Room(leftDoor, rightDoor, topDoor, bottomDoor, true, false);
 
                 } else if (column == entranceCol && row == 0) {
-                    myMaze[row][column] = new Room(leftDoor, rightDoor,topDoor,bottomDoor,false,true);
+                    myMaze[row][column] = new Room(leftDoor, rightDoor, topDoor, bottomDoor, false, true);
                     myCurrentRoom = myMaze[row][column];
-                    myCurrentRoomLocation = new Point(row,column);
-                } else{
-                    myMaze[row][column] = new Room(leftDoor, rightDoor,topDoor,bottomDoor,false,false);
+                    myCurrentRoomLocation = new Point(row, column);
+                } else {
+                    myMaze[row][column] = new Room(leftDoor, rightDoor, topDoor, bottomDoor, false, false);
                 }
             }
         }
     }
-    private static boolean randomBoolean(){
+    private static boolean randomBoolean() {
         return Math.random() < 0.5;
     }
 
 
-    private void moveRoom(final int theNewRow, final int theNewCol){
-        if(theNewRow >= myMazeRows || theNewRow < 0 || theNewCol >= myMazeColumns || theNewCol < 0){
+    private void moveRoom(final int theNewRow, final int theNewCol) {
+        if (theNewRow >= myMazeRows || theNewRow < 0 || theNewCol >= myMazeColumns || theNewCol < 0) {
             throw new IllegalArgumentException("invalid coordinates out of bound for maze");
         }
         myCurrentRoom.setCurrentRoom(false);
         myCurrentRoom = myMaze[theNewRow][theNewCol];
         myCurrentRoom.setCurrentRoom(true);
-        myCurrentRoomLocation.setLocation(theNewRow,theNewCol);
+        myCurrentRoomLocation.setLocation(theNewRow, theNewCol);
         fireCurrentRoomChange();
     }
-    public void moveLeft(){
-        int newCol = myCurrentRoomLocation.y - 1;
-        if(newCol < 0){
-            throw new IllegalArgumentException("trying to move out of bounds");
+    public void moveLeft() {
+        final int newCol = myCurrentRoomLocation.y - 1;
+        if (newCol < 0) {
+            throw new IllegalArgumentException(OUTBOUNDSMESSAGE);
         }
         fireCurrentDoorChange(myCurrentRoom.getLeftDoor());
         moveRoom(myCurrentRoomLocation.x, newCol);
     }
-    public void moveRight(){
-        int newCol = myCurrentRoomLocation.y + 1;
-        if(newCol >= myMazeColumns){
-            throw new IllegalArgumentException("trying to move out of bounds");
+    public void moveRight() {
+        final int newCol = myCurrentRoomLocation.y + 1;
+        if (newCol >= myMazeColumns) {
+            throw new IllegalArgumentException(OUTBOUNDSMESSAGE);
         }
         fireCurrentDoorChange(myCurrentRoom.getRightDoor());
-        moveRoom(myCurrentRoomLocation.x,newCol);
+        moveRoom(myCurrentRoomLocation.x, newCol);
 
 
     }
-    public void moveUp(){
-        int newRow = myCurrentRoomLocation.x - 1;
-        if(newRow < 0){
-            throw new IllegalArgumentException("trying to move out of bounds");
+    public void moveUp() {
+        final int newRow = myCurrentRoomLocation.x - 1;
+        if (newRow < 0) {
+            throw new IllegalArgumentException(OUTBOUNDSMESSAGE);
         }
         fireCurrentDoorChange(myCurrentRoom.getTopDoor());
         moveRoom(newRow, myCurrentRoomLocation.y);
 
 
     }
-    public void moveDown(){
-        int newRow = myCurrentRoomLocation.x + 1;
-        if(newRow >= myMazeRows){
-            throw new IllegalArgumentException("trying to move out of bounds");
+    public void moveDown() {
+        final int newRow = myCurrentRoomLocation.x + 1;
+        if (newRow >= myMazeRows) {
+            throw new IllegalArgumentException(OUTBOUNDSMESSAGE);
         }
         fireCurrentDoorChange(myCurrentRoom.getBottomDoor());
         moveRoom(newRow, myCurrentRoomLocation.y);
     }
-    public Room getCurrentRoom(){
+    public Room getCurrentRoom() {
         return myMaze[myCurrentRoomLocation.x][myCurrentRoomLocation.y];
     }
-    public int getMyMazeRows(){
+    public int getMyMazeRows() {
         return myMazeRows;
     }
-    public int getMyMazeColumns(){
+    public int getMyMazeColumns() {
         return myMazeColumns;
     }
-    public Room getRoomInMaze(int theRow, int theCol){
+    public Room getRoomInMaze(final int theRow, final int theCol) {
         return myMaze[theRow][theCol];
     }
-    private void fireCurrentDoorChange(Door theDoor){
+    private void fireCurrentDoorChange(final Door theDoor) {
         myChange.firePropertyChange("Door Change", null, theDoor);
     }
-    private void fireCurrentRoomChange(){
-        myChange.firePropertyChange("Room Change",null, myCurrentRoom);
+    private void fireCurrentRoomChange() {
+        myChange.firePropertyChange("Room Change", null, myCurrentRoom);
     }
-    private void fireLoadRoomChange(){
+    private void fireLoadRoomChange() {
         myChange.firePropertyChange("Maze Loaded", null, this);
     }
-    public void addPropertyChangeListener(final PropertyChangeListener theListener){
+    public void addPropertyChangeListener(final PropertyChangeListener theListener) {
         myChange.addPropertyChangeListener(theListener);
     }
     public void saveMaze() {
         try {
-            FileOutputStream file = new FileOutputStream(FILENAME);
-            ObjectOutputStream out = new ObjectOutputStream(file);
+            final FileOutputStream file = new FileOutputStream(FILENAME);
+            final ObjectOutputStream out = new ObjectOutputStream(file);
             out.writeObject(this);
             out.close();
             file.close();
-        } catch (IOException theException) {
+        } catch (final IOException theException) {
             System.out.println("IOException caught: " + theException.getMessage());
         }
     }
 
     public void loadMaze() {
         try {
-            FileInputStream file = new FileInputStream(FILENAME);
-            ObjectInputStream in = new ObjectInputStream(file);
-            Maze loadedMaze = (Maze) in.readObject();
+            final FileInputStream file = new FileInputStream(FILENAME);
+            final ObjectInputStream in = new ObjectInputStream(file);
+            final Maze loadedMaze = (Maze) in.readObject();
             myMaze = loadedMaze.myMaze;
             myCurrentRoom = loadedMaze.myCurrentRoom;
             myCurrentRoomLocation = loadedMaze.myCurrentRoomLocation;
             fireLoadRoomChange();
             in.close();
             file.close();
-        } catch (IOException | ClassNotFoundException theException) {
+        } catch (final IOException | ClassNotFoundException theException) {
             System.out.println("Exception caught: " + theException.getMessage());
         }
     }

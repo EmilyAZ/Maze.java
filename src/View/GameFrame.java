@@ -2,25 +2,32 @@ package View;
 
 import Controller.MenuBarController;
 import Model.Maze;
-
 import javax.swing.*;
+import java.awt.*;
 
 public class GameFrame extends JFrame {
+    private static final Dimension DIMENSION = new Dimension(500, 500);
+    private static final int ROOMS = 5;
+    private final GameMenuBar myGameMenu;
+    private final MazePanel myMazePanel;
+    private final Maze myMaze;
 
     public GameFrame() {
-        Maze maze = new Maze(5,5);
+        myMaze = new Maze(ROOMS, ROOMS);
         setTitle("Maze");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        GameMenuBar GameMenu = new GameMenuBar();
-        MazePanel mazePanel = new MazePanel(maze);
-        add(mazePanel);
-        new MenuBarController(maze,GameMenu);
-        setJMenuBar(GameMenu);
-
-        setSize(500, 500);
+        myGameMenu = new GameMenuBar();
+        myMazePanel = new MazePanel(myMaze);
+        setSize(DIMENSION);
         setResizable(false);
         setLocationRelativeTo(null); // Center the frame on the screen
         setVisible(true);
+        setUpGUI();
+    }
+    private void setUpGUI() {
+        new MenuBarController(myMaze, myGameMenu);
+        setJMenuBar(myGameMenu);
+        add(myMazePanel);
     }
 
 }

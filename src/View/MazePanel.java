@@ -12,7 +12,7 @@ import javax.swing.*;
 public class MazePanel extends JPanel implements PropertyChangeListener {
     private final Maze myMaze;
 
-    public MazePanel(Maze theMaze) {
+    public MazePanel(final Maze theMaze) {
         super();
         myMaze = theMaze;
         layoutComponents();
@@ -22,12 +22,12 @@ public class MazePanel extends JPanel implements PropertyChangeListener {
         setLayout(new GridLayout(myMaze.getMyMazeRows(), myMaze.getMyMazeColumns()));
         createRoomPanels();
     }
-    private void createRoomPanels(){
+    private void createRoomPanels() {
         for (int row = 0; row < myMaze.getMyMazeRows(); row++) {
             for (int col = 0; col < myMaze.getMyMazeColumns(); col++) {
-                Room room = myMaze.getRoomInMaze(row, col);
-                RoomPanel roomPanel = new RoomPanel(room);
-                RoomController roomController = new RoomController(myMaze,roomPanel);
+                final Room room = myMaze.getRoomInMaze(row, col);
+                final RoomPanel roomPanel = new RoomPanel(room);
+                final RoomController roomController = new RoomController(myMaze, roomPanel);
                 roomController.updateView();
                 add(roomPanel);
             }
@@ -35,13 +35,13 @@ public class MazePanel extends JPanel implements PropertyChangeListener {
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent theEvent) {
-        if("Room Change".equals(theEvent.getPropertyName())){
-            if(myMaze.getCurrentRoom().getMyExit()){
-                JOptionPane.showMessageDialog(this,"You Win!");
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+        if ("Room Change".equals(theEvent.getPropertyName())) {
+            if (myMaze.getCurrentRoom().getMyExit()) {
+                JOptionPane.showMessageDialog(this, "You Win!");
             }
         }
-        if("Maze Loaded".equals(theEvent.getPropertyName())){
+        if ("Maze Loaded".equals(theEvent.getPropertyName())) {
             removeAll();
             createRoomPanels();
             revalidate();

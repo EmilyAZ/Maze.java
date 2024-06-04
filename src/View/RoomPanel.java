@@ -2,17 +2,17 @@ package View;
 
 import Model.Door;
 import Model.Room;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RoomPanel extends JPanel {
+    private static final Dimension DOORBUTTONSIZE = new Dimension(10,10);
     private final Room myRoom;
     private final Map<Door, JButton> myDoorButtons;
 
-    public RoomPanel(Room theRoom) {
+    public RoomPanel(final Room theRoom) {
         super();
         myRoom = theRoom;
         myDoorButtons = new HashMap<>();
@@ -26,10 +26,10 @@ public class RoomPanel extends JPanel {
 
     private void createRoom() {
         setLayout(new BorderLayout());
-        JButton topDoor = drawDoor(myRoom.getTopDoor());
-        JButton leftDoor = drawDoor(myRoom.getLeftDoor());
-        JButton rightDoor = drawDoor(myRoom.getRightDoor());
-        JButton bottomDoor = drawDoor(myRoom.getBottomDoor());
+        final JButton topDoor = drawDoor(myRoom.getTopDoor());
+        final JButton leftDoor = drawDoor(myRoom.getLeftDoor());
+        final JButton rightDoor = drawDoor(myRoom.getRightDoor());
+        final JButton bottomDoor = drawDoor(myRoom.getBottomDoor());
         add(topDoor, BorderLayout.NORTH);
         add(leftDoor, BorderLayout.WEST);
         add(rightDoor, BorderLayout.EAST);
@@ -39,20 +39,20 @@ public class RoomPanel extends JPanel {
         }
     }
 
-    private JButton drawDoor(Door door) {
-        if (myDoorButtons.get(door) != null) {
-            return myDoorButtons.get(door);
+    private JButton drawDoor(final Door theDoor) {
+        if (myDoorButtons.get(theDoor) != null) {
+            return myDoorButtons.get(theDoor);
         }
-        JButton doorButton = new JButton();
-        doorButton.setPreferredSize(new Dimension(10, 10));
+        final JButton doorButton = new JButton();
+        doorButton.setPreferredSize(new Dimension(DOORBUTTONSIZE));
         doorButton.setOpaque(true);
 
-        if (door == null) {
+        if (theDoor == null) {
             doorButton.setBackground(Color.BLACK);
             doorButton.setEnabled(false);
         } else {
-            myDoorButtons.put(door, doorButton);
-            updateDoorState(door);
+            myDoorButtons.put(theDoor, doorButton);
+            updateDoorState(theDoor);
         }
         return doorButton;
     }
@@ -71,7 +71,7 @@ public class RoomPanel extends JPanel {
         }
     }
 
-    public void updateRoomState(Room theRoom) {
+    public void updateRoomState(final Room theRoom) {
         if (theRoom.getMyCurrentRoom()) {
             setBackground(Color.YELLOW);
             enableRoom();
@@ -84,14 +84,14 @@ public class RoomPanel extends JPanel {
         }
     }
 
-    public void updateDoorState(Door door) {
-        JButton DoorButton = myDoorButtons.get(door);
-        if (DoorButton != null) {
-            if (door.getDoorLocked()) {
-                DoorButton.setBackground(Color.RED);
-                DoorButton.setEnabled(false);
+    public void updateDoorState(final Door theDoor) {
+        final JButton doorButton = myDoorButtons.get(theDoor);
+        if (doorButton != null) {
+            if (theDoor.getMyDoorLocked()) {
+                doorButton.setBackground(Color.RED);
+                doorButton.setEnabled(false);
             } else {
-                DoorButton.setBackground(Color.GREEN);
+                doorButton.setBackground(Color.GREEN);
             }
         }
     }
@@ -100,8 +100,8 @@ public class RoomPanel extends JPanel {
         return myRoom;
     }
 
-    public JButton getDoorButton(Door door) {
-        return myDoorButtons.get(door);
+    public JButton getDoorButton(final Door theDoor) {
+        return myDoorButtons.get(theDoor);
     }
 }
 

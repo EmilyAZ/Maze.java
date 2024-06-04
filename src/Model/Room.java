@@ -3,7 +3,7 @@ package Model;
 import java.io.Serializable;
 import java.util.*;
 
-public final class Room implements Serializable{
+public final class Room implements Serializable {
     private static final long serialversionUID = 129436332L;
     private static final String RIGHT = "right";
     private static final String LEFT = "left";
@@ -14,52 +14,52 @@ public final class Room implements Serializable{
 
     private final Map<String, Door> myDoors;
     public Room(final Door theLeftDoor,
-                final Door theRightDoor, final Door theTopDoor, final Door theBottomDoor, final boolean theExit,final boolean theCurrentRoom){
+                final Door theRightDoor, final Door theTopDoor, final Door theBottomDoor, final boolean theExit, final boolean theCurrentRoom) {
         myDoors = new HashMap<>();
 
-        if(theLeftDoor != null){
+        if (theLeftDoor != null) {
             myDoors.put(LEFT, theLeftDoor);
         }
-        if(theRightDoor != null){
+        if (theRightDoor != null) {
             myDoors.put(RIGHT, theRightDoor);
         }
-        if(theTopDoor != null){
+        if (theTopDoor != null) {
             myDoors.put(TOP, theTopDoor);
         }
-        if(theBottomDoor != null){
+        if (theBottomDoor != null) {
             myDoors.put(BOTTOM , theBottomDoor);
         }
         myExit = theExit;
         myCurrentRoom = theCurrentRoom;
 
     }
-    public Boolean allDoorsLocked(){
-        for(Door door : myDoors.values()){
-            if(!door.getDoorLocked()){
+    public Boolean allDoorsLocked() {
+        for (Door door : myDoors.values()) {
+            if (!door.getMyDoorLocked()) {
                 return false;
             }
         }
         return true;
     }
-    public Boolean getMyExit(){
+    public Boolean getMyExit() {
         return myExit;
     }
-    public Boolean getMyCurrentRoom(){
+    public Boolean getMyCurrentRoom() {
         return myCurrentRoom;
     }
-    public void setCurrentRoom(Boolean theCurrentRoom){
+    public void setCurrentRoom(final Boolean theCurrentRoom) {
         myCurrentRoom = theCurrentRoom;
     }
-    public Door getLeftDoor(){
+    public Door getLeftDoor() {
         return myDoors.get(LEFT);
     }
-    public Door getRightDoor(){
+    public Door getRightDoor() {
         return myDoors.get(RIGHT);
     }
-    public Door getTopDoor(){
+    public Door getTopDoor() {
         return myDoors.get(TOP);
     }
-    public Door getBottomDoor(){
+    public Door getBottomDoor() {
         return myDoors.get(BOTTOM);
     }
 

@@ -6,16 +6,16 @@ import java.io.Serializable;
 public final class Door implements Serializable {
     private static final long serialversionUID = 123459646L;
 
-    private boolean doorLocked;
+    private boolean myDoorLocked;
 
     public Door(final boolean theDoorLocked) {
-        doorLocked = theDoorLocked;
+        myDoorLocked = theDoorLocked;
 
     }
-    public boolean getDoorLocked(){
-        return doorLocked;
+    public boolean getMyDoorLocked() {
+        return myDoorLocked;
     }
-    public void setDoorLocked(final boolean theDoorLocked){
-        doorLocked = theDoorLocked;
+    public void setMyDoorLocked(final boolean theDoorLocked) {
+        myDoorLocked = theDoorLocked;
     }
 }
