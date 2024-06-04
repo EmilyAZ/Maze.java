@@ -41,5 +41,11 @@ public class MazePanel extends JPanel implements PropertyChangeListener {
                 JOptionPane.showMessageDialog(this,"You Win!");
             }
         }
+        if("Maze Loaded".equals(theEvent.getPropertyName())){
+            removeAll();
+            createRoomPanels();
+            revalidate();
+            repaint();
+        }
     }
 }

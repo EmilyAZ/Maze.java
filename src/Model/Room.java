@@ -1,8 +1,10 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.*;
 
-public final class Room {
+public final class Room implements Serializable{
+    private static final long serialversionUID = 129436332L;
     private static final String RIGHT = "right";
     private static final String LEFT = "left";
     private static final String TOP = "top";

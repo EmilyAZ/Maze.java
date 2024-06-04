@@ -3,11 +3,14 @@ package Model;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.*;
 
 
-public final class Maze {
+public final class Maze implements Serializable {
+    private static final long serialversionUID = 2345214345L;
+    private static final String FILENAME = "savedMaze.txt";
     private static final int MIN_ROOMS = 4;
-    private final Room[][] myMaze;
+    private Room[][] myMaze;
     private Room myCurrentRoom;
     private Point myCurrentRoomLocation;
     private final int myMazeRows;
@@ -133,8 +136,37 @@ public final class Maze {
     private void fireCurrentRoomChange(){
         myChange.firePropertyChange("Room Change",null, myCurrentRoom);
     }
+    private void fireLoadRoomChange(){
+        myChange.firePropertyChange("Maze Loaded", null, this);
+    }
     public void addPropertyChangeListener(final PropertyChangeListener theListener){
         myChange.addPropertyChangeListener(theListener);
     }
+    public void saveMaze() {
+        try {
+            FileOutputStream file = new FileOutputStream(FILENAME);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            out.writeObject(this);
+            out.close();
+            file.close();
+        } catch (IOException theException) {
+            System.out.println("IOException caught: " + theException.getMessage());
+        }
+    }
 
+    public void loadMaze() {
+        try {
+            FileInputStream file = new FileInputStream(FILENAME);
+            ObjectInputStream in = new ObjectInputStream(file);
+            Maze loadedMaze = (Maze) in.readObject();
+            myMaze = loadedMaze.myMaze;
+            myCurrentRoom = loadedMaze.myCurrentRoom;
+            myCurrentRoomLocation = loadedMaze.myCurrentRoomLocation;
+            fireLoadRoomChange();
+            in.close();
+            file.close();
+        } catch (IOException | ClassNotFoundException theException) {
+            System.out.println("Exception caught: " + theException.getMessage());
+        }
+    }
 }
