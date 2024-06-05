@@ -12,4 +12,9 @@ public final class TrueFalseQuestion extends Questions {
     public boolean checkAnswer(String theAnswer) {
         return Boolean.parseBoolean(theAnswer) == myCorrectAnswer;
     }
+
+    @Override
+    public String getType() {
+        return "True/False";
+    }
 }

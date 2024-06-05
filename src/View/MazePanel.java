@@ -41,7 +41,8 @@ public final class MazePanel extends JPanel implements PropertyChangeListener {
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if ("Room Change".equals(theEvent.getPropertyName())) {
             if (myMaze.getCurrentRoom().getMyExit()) {
-                JOptionPane.showMessageDialog(this, "You Win!");
+                JOptionPane.showMessageDialog(this, "You Win! Game will now close");
+                System.exit(0);
             }
         }
         if ("Maze Loaded".equals(theEvent.getPropertyName())) {

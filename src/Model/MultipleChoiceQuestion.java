@@ -1,16 +1,15 @@
 package Model;
-import java.util.List;
 public final class MultipleChoiceQuestion extends Questions{
-    private final List<String> myChoices;
+    private final String[] myChoices;
     private final int myCorrectAnswerIndex;
 
-    public MultipleChoiceQuestion(String theQuestionText, List<String> theChoices, int theCorrectAnswerIndex){
+    public MultipleChoiceQuestion(String theQuestionText, String[] theChoices, int theCorrectAnswerIndex){
         super(theQuestionText);
         myChoices = theChoices;
         myCorrectAnswerIndex = theCorrectAnswerIndex;
     }
-
-    public List<String> getChoices() {
+    @Override
+    public String[] getChoices() {
         return myChoices;
     }
 
@@ -22,6 +21,11 @@ public final class MultipleChoiceQuestion extends Questions{
         } catch (NumberFormatException e){
             return false;
         }
+    }
+
+    @Override
+    public String getType() {
+        return "Multiple Choice";
     }
 
 }

@@ -173,4 +173,5 @@ public final class Maze implements Serializable {
             System.out.println("Exception caught: " + theException.getMessage());
         }
     }
+
 }

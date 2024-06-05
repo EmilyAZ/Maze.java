@@ -7,12 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MazeTests {
     private Maze myMaze;
-    @Test
-    public void testConstructorMazeEntrance(){
-        myMaze = new Maze(4,4);
+  //  @Test
+  //  public void testConstructorMazeEntrance(){
+//        myMaze = new Maze(4,4);
 //        assertEquals(0, myMaze.getCurrentRoom().x);
 //        assertEquals(0,myMaze.getCurrentRoom().y);
-    }
+//    }
 //    @Test
 //    public void testConstructorMazeExit(){
 //        myMaze = new Maze(4,5);

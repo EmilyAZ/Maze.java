@@ -12,4 +12,9 @@ public final class ShortAnswerQuestion extends Questions{
     public boolean checkAnswer(String theAnswer){
         return myCorrectAnswer.equalsIgnoreCase(theAnswer.trim());
     }
+
+    @Override
+    public String getType() {
+        return "Short Answer";
+    }
 }

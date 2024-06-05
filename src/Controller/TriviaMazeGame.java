@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.QuestionFactory;
 import View.GameFrame;
 
 import java.awt.*;
@@ -13,6 +14,7 @@ public final class TriviaMazeGame {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                QuestionFactory.initialize();
                 new GameFrame();
             }
         });
